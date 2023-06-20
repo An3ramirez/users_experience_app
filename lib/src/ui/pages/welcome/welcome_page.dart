@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:users_experience_app/src/helpers/responsive.dart';
+import 'package:users_experience_app/src/ui/helpers/responsive.dart';
 import 'package:users_experience_app/src/routes/routes.dart';
 import 'package:users_experience_app/src/ui/global_widgets/background_image.dart';
 import 'package:users_experience_app/src/ui/global_widgets/round_button.dart';
@@ -28,10 +28,12 @@ class WelcomePage extends StatelessWidget {
                       SizedBox(
                         height: responsive.hp(40),
                       ),
-                      const RoundButton(
+                      RoundButton(
                         textBtn: 'Sign up',
                         paddingHorizontal: 80.0,
                         paddingVertical: 20,
+                        onPressed: () =>
+                            Navigator.pushNamed(context, Routes.SIGNUP),
                       ),
                       RoundButton(
                         textBtn: 'Log in',

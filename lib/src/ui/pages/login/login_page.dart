@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:users_experience_app/src/routes/routes.dart';
 
-import 'package:users_experience_app/src/helpers/helpers.dart';
+import 'package:users_experience_app/src/ui/helpers/helpers.dart';
 import 'package:users_experience_app/src/domain/constants/constants.dart';
 
 /** Global widgets */
@@ -11,6 +11,8 @@ import 'package:users_experience_app/src/ui/global_widgets/custom_input.dart';
 import 'package:users_experience_app/src/ui/global_widgets/round_button.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }

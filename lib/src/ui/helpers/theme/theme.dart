@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:users_experience_app/src/helpers/palette.dart';
+import 'package:users_experience_app/src/ui/helpers/palette.dart';
 
-import '../constants/constants.dart';
+import '../../../domain/constants/constants.dart';
 
 ThemeData channelTheme = ThemeData(
   fontFamily: 'Gilroy',

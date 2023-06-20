@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:users_experience_app/src/domain/constants/constants.dart';
-import 'package:users_experience_app/src/helpers/helpers.dart';
+import 'package:users_experience_app/src/ui/helpers/helpers.dart';
 
 class BackgroundImage extends StatelessWidget {
   const BackgroundImage({Key? key}) : super(key: key);

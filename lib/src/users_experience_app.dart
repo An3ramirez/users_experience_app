@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:users_experience_app/src/routes/pages.dart';
 
 import 'domain/constants/constants.dart' show appName;
-import 'domain/theme/theme.dart';
+import 'ui/helpers/theme/theme.dart';
 
 class UserExperienceApp extends StatelessWidget {
   const UserExperienceApp({Key? key}) : super(key: key);
