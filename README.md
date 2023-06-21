@@ -1,6 +1,6 @@
-# users_experience_app
+# Users Experience App
 
-A new Flutter project.
+Flutter project using riverpod as state manager and high-level clean architecture for its structuring
 
 ## Getting Started
 
