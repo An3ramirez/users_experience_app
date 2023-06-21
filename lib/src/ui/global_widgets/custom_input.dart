@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:users_experience_app/src/domain/constants/constants.dart';
 
 class CustomInput extends StatelessWidget {
   final String placeholder;
   final TextEditingController textController;
   final TextInputType keyboardType;
   final bool isPassword;
+  final String? Function(String?)? validator;
 
   const CustomInput({
     Key? key,
     required this.placeholder,
     required this.textController,
+    this.validator,
     this.keyboardType = TextInputType.text,
     this.isPassword = false,
   }) : super(key: key);
@@ -17,18 +20,19 @@ class CustomInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 3, left: 5, bottom: 3, right: 20),
-      margin: const EdgeInsets.only(bottom: 40),
+      padding: const EdgeInsets.only(top: 5, left: 5, bottom: 5, right: 20),
+      margin: const EdgeInsets.only(bottom: marginBottonCustomInputs),
       child: TextFormField(
         keyboardType: keyboardType,
         obscureText: isPassword,
         controller: textController,
         cursorColor: Colors.white,
+        validator: validator,
         style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
           hintText: placeholder,
           hintStyle: const TextStyle(
-            color: Colors.white54,
+            color: textInputColor,
             fontSize: 20,
             fontWeight: FontWeight.normal,
           ),

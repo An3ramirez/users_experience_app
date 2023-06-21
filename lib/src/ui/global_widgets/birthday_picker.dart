@@ -1,17 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:users_experience_app/src/domain/constants/constants.dart';
 
 class BirthdayPicker extends StatefulWidget {
-  final Function(DateTime) onDateSelected;
+  final Function(String) onDateSelected;
 
   const BirthdayPicker({super.key, required this.onDateSelected});
 
   @override
-  _BirthdayPickerState createState() => _BirthdayPickerState();
+  BirthdayPickerState createState() => BirthdayPickerState();
 }
 
-class _BirthdayPickerState extends State<BirthdayPicker> {
+class BirthdayPickerState extends State<BirthdayPicker> {
   late DateTime _selectedDate;
   late TextEditingController _dateController;
 
@@ -20,6 +21,8 @@ class _BirthdayPickerState extends State<BirthdayPicker> {
     super.initState();
     _selectedDate = DateTime.now();
     _dateController = TextEditingController();
+    _dateController.text = DateFormat('dd/MM/yyyy').format(_selectedDate);
+    widget.onDateSelected(_dateController.text);
   }
 
   @override
@@ -34,17 +37,21 @@ class _BirthdayPickerState extends State<BirthdayPicker> {
       builder: (BuildContext builder) {
         return SizedBox(
           height: 300.0,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.date,
-            initialDateTime: _selectedDate,
-            onDateTimeChanged: (DateTime newDate) {
-              setState(() {
-                _selectedDate = newDate;
-                _dateController.text =
-                    DateFormat('dd/MM/yyyy').format(_selectedDate);
-              });
-              widget.onDateSelected(newDate);
-            },
+          child: CupertinoTheme(
+            data: const CupertinoThemeData(brightness: Brightness.dark),
+            child: CupertinoDatePicker(
+              backgroundColor: primaryColor,
+              mode: CupertinoDatePickerMode.date,
+              initialDateTime: _selectedDate,
+              onDateTimeChanged: (DateTime newDate) {
+                setState(() {
+                  _selectedDate = newDate;
+                  _dateController.text =
+                      DateFormat('dd/MM/yyyy').format(_selectedDate);
+                });
+                widget.onDateSelected(_dateController.text);
+              },
+            ),
           ),
         );
       },
@@ -53,16 +60,21 @@ class _BirthdayPickerState extends State<BirthdayPicker> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        _showDatePicker(context);
-      },
-      child: AbsorbPointer(
-        child: TextFormField(
-          controller: _dateController,
-          decoration: const InputDecoration(
-            labelText: 'Fecha de nacimiento',
-            suffixIcon: Icon(CupertinoIcons.calendar),
+    return Container(
+      margin: const EdgeInsets.only(bottom: marginBottonCustomInputs),
+      child: GestureDetector(
+        onTap: () {
+          _showDatePicker(context);
+        },
+        child: AbsorbPointer(
+          child: TextFormField(
+            style: const TextStyle(color: Colors.white),
+            controller: _dateController,
+            decoration: const InputDecoration(
+              labelText: 'Fecha de nacimiento',
+              labelStyle: TextStyle(fontSize: 20, color: textInputColor),
+              suffixIcon: Icon(CupertinoIcons.calendar, color: textInputColor),
+            ),
           ),
         ),
       ),

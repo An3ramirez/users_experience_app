@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:users_experience_app/src/ui/pages/welcome/welcome_page.dart';
+import 'package:users_experience_app/src/routes/routes.dart';
 
 class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final String title;
@@ -16,13 +16,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
           margin: const EdgeInsets.only(right: 10),
           child: InkWell(
             onTap: () {
-              Navigator.pushReplacement(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => const WelcomePage(),
-                  transitionDuration: const Duration(milliseconds: 0),
-                ),
-              );
+              Navigator.pushNamed(context, Routes.PROFILE);
             },
             child: const Icon(Icons.settings, color: Colors.white54),
           ),

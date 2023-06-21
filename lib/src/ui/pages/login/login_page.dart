@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:users_experience_app/src/data/models/models.dart';
-import 'package:users_experience_app/src/domain/entities/requestStatus.dart';
+import 'package:users_experience_app/src/domain/entities/request_status.dart';
 import 'package:users_experience_app/src/domain/enums/enum_request_status.dart';
 import 'package:users_experience_app/src/domain/entities/auth_result.dart';
 import 'package:users_experience_app/src/routes/routes.dart';
@@ -119,7 +119,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
     if (authResult.status) {
       Navigator.pushNamedAndRemoveUntil(
         context,
-        Routes.ROOT,
+        Routes.HOME,
         (_) => false,
       );
     } else {

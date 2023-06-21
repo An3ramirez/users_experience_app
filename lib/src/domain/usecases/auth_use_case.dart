@@ -9,9 +9,9 @@ class AuthUseCase {
 
   AuthUseCase(this._userRepository);
 
-  Future<AuthResult> signIn(User user) async {
+  Future<AuthResult> logIn(User user) async {
     // Realiza la lógica de inicio de sesión utilizando el repositorio de autenticación
-    return await _userRepository.signIn(user);
+    return await _userRepository.logIn(user);
   }
 
   Future<AuthResult> signUp(Person person) async {

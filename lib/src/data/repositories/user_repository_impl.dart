@@ -7,7 +7,7 @@ import 'package:users_experience_app/src/domain/repositories/user_repository.dar
 
 class UserRepositoryImpl implements UserRepository {
   @override
-  Future<AuthResult> signIn(User user) async {
+  Future<AuthResult> logIn(User user) async {
     await Future.delayed(const Duration(seconds: 2));
     User isName = fakeUsers.firstWhere(
       (element) => element.userName == user.userName,
@@ -36,6 +36,10 @@ class UserRepositoryImpl implements UserRepository {
     if (kDebugMode) {
       print('Usuario registrado: ${person.name}');
     }
-    return AuthResult();
+    return AuthResult(
+      message: 'Usuario registrado con exito',
+      status: true,
+      aditionalData: getRandomString(20),
+    );
   }
 }
