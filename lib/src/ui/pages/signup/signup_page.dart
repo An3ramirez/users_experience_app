@@ -1,20 +1,21 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:users_experience_app/src/data/models/user.dart';
 import 'package:users_experience_app/src/domain/constants/constants.dart';
+import 'package:users_experience_app/src/domain/entities/requestStatus.dart';
+import 'package:users_experience_app/src/domain/enums/enum_request_status.dart';
 import 'package:users_experience_app/src/ui/helpers/helpers.dart';
 import 'package:users_experience_app/src/ui/global_widgets/birthday_picker.dart';
 import 'package:users_experience_app/src/ui/global_widgets/custom_input.dart';
-import 'package:users_experience_app/src/ui/providers/register_user_provider.dart';
+import 'package:users_experience_app/src/ui/pages/signup/signup_state.dart';
 
 class SignupPage extends ConsumerStatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
 
   @override
-  _SignupPageState createState() => _SignupPageState();
+  SignupPageState createState() => SignupPageState();
 }
 
-class _SignupPageState extends ConsumerState<SignupPage> {
+class SignupPageState extends ConsumerState<SignupPage> {
   final nameCtrl = TextEditingController();
   final lastnameCtrl = TextEditingController();
   final birthDateCtrl = TextEditingController();
@@ -26,13 +27,13 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    ref.read(registerUserProvider);
   }
 
   @override
   Widget build(BuildContext context) {
     Responsive responsive = Responsive(context);
+    final RequestStatus signInState = ref.watch(signUpStateProvider);
+    final bool loading = signInState.status == RequestStatusEnum.loading;
 
     return SafeArea(
       child: Scaffold(
@@ -49,9 +50,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                     style: textWhite,
                   ),
                 ),
-                Consumer(builder: (context, watch, _) {
-                  return _formSignup(context, _registerUser);
-                }),
+                _formSignup(context, loading),
               ],
             ),
           ),
@@ -60,7 +59,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     );
   }
 
-  Widget _formSignup(BuildContext context, VoidCallback registeruserCallback) {
+  Widget _formSignup(BuildContext context, bool loading) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
@@ -71,10 +70,13 @@ class _SignupPageState extends ConsumerState<SignupPage> {
               onDateSelected: (value) => birthDateCtrl.text = value.toString()),
           CustomInput(placeholder: 'Dirección', textController: addressCtrl),
           CustomInput(placeholder: 'Usuario', textController: userNameCtrl),
-          CustomInput(placeholder: 'Contraseña', textController: passwordCtrl),
+          CustomInput(
+              placeholder: 'Contraseña',
+              isPassword: true,
+              textController: passwordCtrl),
           ElevatedButton(
-            onPressed: registeruserCallback,
-            child: const Text('Registrarse'),
+            onPressed: loading ? null : _registerUser,
+            child: Text(loading ? 'Cargando' : 'Registrarse'),
           ),
         ],
       ),
@@ -82,8 +84,8 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   }
 
   void _registerUser() {
-    final registerUserUseCase = ref.read(registerUserUseCaseProvider);
-    final user = User(
+    /* final registerUserUseCase = ref.read(registerUserUseCaseProvider);
+    final person = Person(
         name: nameCtrl.text,
         lastname: lastnameCtrl.text,
         birthDate: birthDateCtrl.text,
@@ -91,10 +93,10 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         userName: userNameCtrl.text,
         password: passwordCtrl.text);
 
-    registerUserUseCase(user).then((_) {
+    registerUserUseCase(person).then((_) {
       // Registro exitoso, realiza alguna acción adicional si es necesario
     }).catchError((error) {
       // Manejo de errores en el registro de usuario
-    });
+    }); */
   }
 }

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:users_experience_app/src/data/models/models.dart';
+import 'package:users_experience_app/src/domain/entities/requestStatus.dart';
+import 'package:users_experience_app/src/domain/enums/enum_request_status.dart';
+import 'package:users_experience_app/src/domain/entities/auth_result.dart';
 import 'package:users_experience_app/src/routes/routes.dart';
 
 import 'package:users_experience_app/src/ui/helpers/helpers.dart';
 import 'package:users_experience_app/src/domain/constants/constants.dart';
+import 'package:users_experience_app/src/ui/pages/login/login_state.dart';
 
 /** Global widgets */
 import 'package:users_experience_app/src/ui/global_widgets/background_image.dart';
@@ -14,16 +19,18 @@ class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  LoginPageState createState() => LoginPageState();
 }
 
-class _LoginPageState extends ConsumerState<LoginPage> {
+class LoginPageState extends ConsumerState<LoginPage> {
   final nameCtrl = TextEditingController();
   final passCtrl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     Responsive responsive = Responsive(context);
+    final RequestStatus loginState = ref.watch(logInStateProvider);
+    final bool loading = loginState.status == RequestStatusEnum.loading;
 
     return SafeArea(
       child: Stack(
@@ -45,7 +52,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         style: textWhite,
                       ),
                     ),
-                    _formLogin(context, false)
+                    _formLogin(context, loading)
                   ],
                 ),
               ),
@@ -90,25 +97,33 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           RoundButton(
             textBtn: loading ? 'Loading...' : 'Log in',
             color: Colors.white,
-            onPressed: loading ? null : () => onLogin(),
+            onPressed: loading ? null : () => onLogin(context),
           ),
         ],
       ),
     );
   }
 
-  void onLogin() async {
+  void onLogin(BuildContext context) async {
     FocusScope.of(context).unfocus();
-    var status = true;
+    User user = User(
+      userName: nameCtrl.text.trim(),
+      password: passCtrl.text.trim(),
+    );
+    AuthResult authResult =
+        await ref.read(logInStateProvider.notifier).sigIn(user);
+    navigateOrError(authResult);
+  }
 
-    if (status) {
+  void navigateOrError(AuthResult authResult) {
+    if (authResult.status) {
       Navigator.pushNamedAndRemoveUntil(
         context,
         Routes.ROOT,
         (_) => false,
       );
     } else {
-      showSnackBar(context, 'authRepository.message');
+      showSnackBar(context, authResult.message);
     }
   }
 }

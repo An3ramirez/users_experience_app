@@ -18,7 +18,7 @@ abstract class Pages {
   static final Map<String, Widget Function(BuildContext)> routes = {
     Routes.ROOT: (_) => const RootPage(),
     Routes.WELCOME: (_) => const WelcomePage(),
-    Routes.LOGIN: (_) => LoginPage(),
-    Routes.SIGNUP: (_) => SignupPage(),
+    Routes.LOGIN: (_) => const LoginPage(),
+    Routes.SIGNUP: (_) => const SignupPage(),
   };
 }
