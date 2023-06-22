@@ -29,9 +29,6 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<AuthResult> signUp(Person person) async {
-    // Aquí puedes implementar la lógica para registrar al usuario en tu fuente de datos
-    // Por ejemplo, puedes llamar a una API o guardar los datos en una base de datos local
-    // Asegúrate de agregar la lógica necesaria y manejar las excepciones adecuadamente
     await Future.delayed(const Duration(seconds: 2));
     if (kDebugMode) {
       print('Usuario registrado: ${person.name}');
