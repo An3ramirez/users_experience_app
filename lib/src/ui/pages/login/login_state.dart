@@ -4,12 +4,14 @@ import 'package:users_experience_app/src/domain/enums/enum_request_status.dart';
 
 import 'package:users_experience_app/src/data/models/models.dart';
 import 'package:users_experience_app/src/domain/entities/auth_result.dart';
-import 'package:users_experience_app/src/domain/usecases/auth_use_case.dart';
+import 'package:users_experience_app/src/domain/use_cases/auth_use_case.dart';
 
 class LogInNotifier extends StateNotifier<RequestStatus> {
   final AuthUseCase _authUseCase;
 
   LogInNotifier(this._authUseCase) : super(RequestStatus());
+
+  RequestStatus get currentState => state;
 
   Future<AuthResult> sigIn(User user) async {
     try {
